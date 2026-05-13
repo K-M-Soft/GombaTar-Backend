@@ -18,3 +18,14 @@ Notes:
 
 - No runtime `CREATE TABLE` is executed by the application.
 - Database schema changes should be handled by migrations outside runtime.
+
+## API route lista
+
+| Method | Route | Auth | Payload (JSON body) | Response |
+| --- | --- | --- | --- | --- |
+| GET | / | Nem | Nincs | 200: `{ "message": "GombaTar Backend API" }` |
+| GET | /health | Nem | Nincs | 200: `{ "status": "ok" }` |
+| GET | /health/db | Nem | Nincs | 200: `{ "status": "ok", "database": "reachable" }` |
+| GET | /auth/me | Igen (Bearer token) | Nincs | 200: `{ "ok": true, "data": { "user": { ... } }, "message": null }` 401: `{ "ok": false, "data": null, "message": "Nincs jogosultság" }` vagy `{ "ok": false, "data": null, "message": "Érvénytelen vagy lejárt token" }` |
+| POST | /auth/login | Nem | `{ "email": "string", "password": "string" }` | 200: `{ "ok": true, "data": { "access_token": "...", "refresh_token": "...", "expires_in": 3600, "token_type": "bearer", "user": { ... } }, "message": "Sikeres bejelentkezés" }` 400: `{ "ok": false, "data": null, "message": "Email és jelszó kötelező" }` 401: `{ "ok": false, "data": null, "message": "Sikertelen bejelentkezés" }` vagy Supabase hibaüzenet |
+| POST | /auth/logout | Igen (Bearer token) | Nincs | 200: `{ "ok": true, "data": null, "message": "Sikeres kijelentkezés" }` 400: `{ "ok": false, "data": null, "message": "Sikertelen kijelentkezés" }` 401: `{ "ok": false, "data": null, "message": "Nincs jogosultság" }` vagy `{ "ok": false, "data": null, "message": "Érvénytelen vagy lejárt token" }` |
