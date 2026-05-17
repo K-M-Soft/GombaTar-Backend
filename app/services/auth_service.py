@@ -11,7 +11,7 @@ from sqlalchemy import text
 from app.helpers import api_response
 from app.repositories import get_engine
 
-TOKEN_MAX_AGE_SECONDS = int(os.environ.get("AUTH_TOKEN_MAX_AGE_SECONDS", "2592000"))
+TOKEN_MAX_AGE_SECONDS = int(os.environ.get("AUTH_TOKEN_MAX_AGE_SECONDS", "31536000"))  # Default: 1 year
 AUTH_TOKEN_SALT = "gombatar-auth-token-v1"
 
 
